@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/contactsSlice';
 
-// import Filter from 'components/Filter/Filter';
+export default function Contacts({ contacts }) {
+  const dispatch = useDispatch();
 
-export default function Contacts({ contacts, onDeleteContact }) {
   return (
     <div>
-      {/* <Filter onFilterControl={onFilterControl} /> */}
       <ul>
         {contacts.map(({ id, name, number }) => (
           <li key={id}>
@@ -13,7 +14,7 @@ export default function Contacts({ contacts, onDeleteContact }) {
               {name}: <span>{number}</span>
             </p>
 
-            <button onClick={() => onDeleteContact(id)} type="button">
+            <button onClick={() => dispatch(deleteContact(id))} type="button">
               delete contact
             </button>
           </li>
