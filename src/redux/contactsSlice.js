@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
 
 const defaultArrayContacts = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -16,7 +17,9 @@ export const contactsSlice = createSlice({
     },
 
     addContact: (state, action) => {
-      state.push(action.payload);
+      const id = nanoid(3);
+      const contactObj = { ...action.payload, id };
+      state.push(contactObj);
     },
   },
 });

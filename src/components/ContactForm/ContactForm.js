@@ -1,11 +1,25 @@
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
 
-export default function ContactForm({ onFormData }) {
+export default function ContactForm() {
+  const contacts = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
+
   function handleSubmit(values, { resetForm }) {
-    onFormData(values);
     resetForm();
+
+    const dataNameLowerCase = values.name.toLowerCase().trim();
+
+    if (
+      contacts.find(el => dataNameLowerCase === el.name.toLowerCase().trim())
+    ) {
+      alert(`Contact was added`);
+      return;
+    }
+
+    dispatch(addContact(values));
   }
 
   const initialValues = {
@@ -44,7 +58,3 @@ export default function ContactForm({ onFormData }) {
     </div>
   );
 }
-
-ContactForm.propTypes = {
-  onFormData: PropTypes.func.isRequired,
-};
